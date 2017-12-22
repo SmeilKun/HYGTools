@@ -23,8 +23,15 @@
  */
 + (BOOL)hyg_validateIdentityCard: (NSString *)identityCard;
 /*
+ 验证密码
+ */
++ (BOOL)hyg_validatePassword:(NSString *)password;
+/*
  获取当前时间戳
  */
 + (NSString *)hyg_getCurrentCursor;
-
+/*
+ 获取当前版本号
+ */
++ (NSString *)hyg_getCurrentVersion;
 @end

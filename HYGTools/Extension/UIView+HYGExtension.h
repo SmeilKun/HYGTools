@@ -14,6 +14,8 @@
  Create a snapshot image of the complete view hierarchy.
  */
 - (nullable UIImage *)snapshotImage;
+- (void)addCoradius:(UIRectCorner)corners size:(CGFloat)size;
+- (void)addCoradius:(CGFloat)redius;
 
 @property (nonatomic) CGFloat left;        ///< Shortcut for frame.origin.x.
 @property (nonatomic) CGFloat top;         ///< Shortcut for frame.origin.y

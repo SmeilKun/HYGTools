@@ -26,4 +26,16 @@
  @param viewsize 大小
  */
 + (UIImage *)hyg_image: (UIImage *)image fillSize: (CGSize)viewsize;
+/*!
+ @brief 图片拉伸
+ @param capInsets 。。
+ @param resizingMode 拉伸模式
+ */
+
+- (UIImage *)hyg_resizableImageWithCapInsets:(CGFloat)capInsets resizingMode:(UIImageResizingMode)resizingMode;
+
+- (UIImage *)fixOrientation;
+
+/*! 已进行转正处理 */
+- (UIImage *)croppedImage;
 @end

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 @interface NSString (HYGExtension)
 
 /*!
@@ -53,5 +53,44 @@
  @param customDate 时间
  */
 + (NSString *)hyg_returnUploadTime:(NSString *)customDate;
-
+/*!
+ @brief 返回JSON字符串
+ @param dic 字典
+ */
++ (NSString *)dictionaryToJson:(NSDictionary *)dic;
+/*!
+ @brief 返回字典
+ @param jsonString JSON字符串
+ */
++ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
+/*!
+ @brief 返回字符串size
+ @param string 字符串
+ @param size 容器size
+ @param font 字符串字体大小
+ */
++ (CGSize)stringSizeWithString:(NSString *)string size:(CGSize)size font:(UIFont *)font;
+/*!
+ @brief 返回日期字符串
+ @param format 日期格式
+ @param timeStamp 时间戳
+ */
++ (NSString *)formatTime:(NSString *)format stamp:(double)timeStamp;
+/*!
+ @brief 返回日期字符串
+ @param format 日期格式
+ @param date 日期
+ */
++ (NSString *)formatDateToString:(NSString *)format date:(NSDate *)date;
+/*!
+ @brief 返回日期
+ @param format 日期格式
+ @param dateStr 日期字符串
+ */
++ (NSDate *)formatStringToDate:(NSString *)format string:(NSString *)dateStr;
+/*!
+ @brief 返回局部加密的手机号
+ @param mobile 手机号
+ */
++ (NSString *)mobileEncryptionWithMobile:(NSString *)mobile;
 @end

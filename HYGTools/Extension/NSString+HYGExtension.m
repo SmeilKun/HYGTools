@@ -266,4 +266,81 @@
     return timeString;
 }
 
++ (NSString *)dictionaryToJson:(NSDictionary *)dic {
+
+    NSError *parseError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
+
++ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
+
+    if (jsonString == nil) {
+        return nil;
+    }
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if(err) {
+        //        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
+
++ (CGSize)stringSizeWithString:(NSString *)string size:(CGSize)size font:(UIFont *)font {
+    CGSize strSize = CGSizeZero;
+    if (size.width > 0) {
+        strSize = CGSizeMake(size.width, 20);
+    }
+    strSize = [string boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font} context:nil].size;
+
+    return strSize;
+}
+
++ (NSString *)formatTime:(NSString *)format stamp:(double)timeStamp{
+    if (!timeStamp) {
+        return nil;
+    }
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStamp];
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setLocale:[NSLocale currentLocale]];
+    [formatter setDateFormat:format];
+    return [formatter stringFromDate:date];
+}
+
++ (NSString *)formatDateToString:(NSString *)format date:(NSDate *)date {
+    if (!date) {
+        return nil;
+    }
+    NSDateFormatter * dateFormat = [NSDateFormatter new];
+    dateFormat.dateFormat = format;
+    return [dateFormat stringFromDate:date];
+}
+
++ (NSDate *)formatStringToDate:(NSString *)format string:(NSString *)dateStr {
+    if (!dateStr) {
+        return nil;
+    }
+    NSDateFormatter * dateFormat = [NSDateFormatter new];
+    dateFormat.dateFormat = format;
+    return [dateFormat dateFromString:dateStr];
+}
+
++ (NSString *)mobileEncryptionWithMobile:(NSString *)mobile {
+    if (!mobile) {
+        return nil;
+    }
+    if (mobile.length != 11) {
+        return mobile;
+    }
+    NSString * subStr = [mobile substringWithRange:NSMakeRange(3, 4)];
+    mobile = [mobile stringByReplacingOccurrencesOfString:subStr withString:@"****"];
+    //NSLog(@"------%@,--------%@",subStr,mobile);
+    return mobile;
+}
+
 @end
