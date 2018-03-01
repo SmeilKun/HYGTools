@@ -40,12 +40,12 @@ char textView_isFirstLineHeadIndentKey;
 
 - (void)setLineSpace:(CGFloat)lineSpace {
 
-    objc_setAssociatedObject(self, &textView_lineSpaceKey, @(lineSpace), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &textView_lineSpaceKey, @(lineSpace), OBJC_ASSOCIATION_RETAIN);
 }
 
 - (void)setFontLineSpace:(CGFloat)fontLineSpace {
 
-    objc_setAssociatedObject(self, &textView_fontLineSpaceKey, @(fontLineSpace), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &textView_fontLineSpaceKey, @(fontLineSpace), OBJC_ASSOCIATION_RETAIN);
 }
 
 - (void)setIsFirstLineHeadIndent:(BOOL)isFirstLineHeadIndent {
@@ -58,7 +58,8 @@ char textView_isFirstLineHeadIndentKey;
     objc_setAssociatedObject(self, &textView_hyg_TextKey, hyg_Text, OBJC_ASSOCIATION_COPY_NONATOMIC);
 
     //设置字间距 NSKernAttributeName:@1.5f
-    NSDictionary *dic = @{NSFontAttributeName:self.font, NSParagraphStyleAttributeName:[self getParagraphStyle], NSKernAttributeName:@(self.fontLineSpace?:1.0f)
+    NSDictionary *dic = @{NSFontAttributeName:self.font, NSParagraphStyleAttributeName:[self getParagraphStyle], NSKernAttributeName:@(self.fontLineSpace?:1.0f),
+        NSForegroundColorAttributeName:self.textColor
                           };
 
     NSAttributedString *attributeStr = [[NSAttributedString alloc] initWithString:hyg_Text attributes:dic];
@@ -68,7 +69,8 @@ char textView_isFirstLineHeadIndentKey;
 - (CGFloat)getHyg_TextHeightWithSize:(CGSize)labelSize {
 
     //设置字间距 NSKernAttributeName:@1.5f
-    NSDictionary *dic = @{NSFontAttributeName:self.font, NSParagraphStyleAttributeName:[self getParagraphStyle], NSKernAttributeName:@(self.fontLineSpace?:1.0f)
+    NSDictionary *dic = @{NSFontAttributeName:self.font, NSParagraphStyleAttributeName:[self getParagraphStyle], NSKernAttributeName:@(self.fontLineSpace?:1.0f),
+        NSForegroundColorAttributeName:self.textColor
                           };
 
 
