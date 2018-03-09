@@ -8,6 +8,7 @@
 
 #import "UILabel+HYGExtension.h"
 #import <objc/runtime.h>
+#import <objc/message.h>
 
 @implementation UILabel (HYGExtension)
 
@@ -15,6 +16,15 @@ char lineSpaceKey;
 char fontLineSpaceKey;
 char hyg_TextKey;
 char isFirstLineHeadIndentKey;
+
++ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Method textMethod = class_getInstanceMethod(self, @selector(setText:));
+        Method hyg_textMethod = class_getInstanceMethod(self, @selector(setHyg_text:));
+        method_exchangeImplementations(textMethod, hyg_textMethod);
+    });
+}
 
 - (CGFloat)lineSpace {
     NSNumber * number = objc_getAssociatedObject(self, &lineSpaceKey);
@@ -51,6 +61,27 @@ char isFirstLineHeadIndentKey;
 - (void)setIsFirstLineHeadIndent:(BOOL)isFirstLineHeadIndent {
 
     objc_setAssociatedObject(self, &isFirstLineHeadIndentKey, @(isFirstLineHeadIndent), OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (void)setHyg_text:(NSString *)text {
+    if (self.lineSpace ||
+        self.fontLineSpace ||
+        self.isFirstLineHeadIndent) {
+
+        if (!self.font) {
+            self.font = [UIFont systemFontOfSize:17];
+        }
+        NSDictionary *dic = @{
+                              NSFontAttributeName:self.font, NSParagraphStyleAttributeName:[self getParagraphStyle],
+                              NSKernAttributeName:@(self.fontLineSpace?:1.0f),
+                              NSForegroundColorAttributeName:self.textColor?:[UIColor blackColor]
+                              };
+
+        NSAttributedString *attributeStr = [[NSAttributedString alloc] initWithString:text attributes:dic];
+        self.attributedText = attributeStr;
+    }else {
+        [self setHyg_text:text];
+    }
 }
 
 - (void)setHyg_Text:(NSString *)hyg_Text {

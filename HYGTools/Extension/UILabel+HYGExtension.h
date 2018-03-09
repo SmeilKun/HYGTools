@@ -13,9 +13,9 @@
 @property (nonatomic,assign) CGFloat lineSpace;//行间隔
 @property (nonatomic,assign) CGFloat fontLineSpace;//字体间隔
 @property (nonatomic,assign) BOOL isFirstLineHeadIndent;//是否首行缩进
-//设置有行间隔和字体间隔时的内容。注意：若使用了以上任意一个扩展属性，设置label内容必须使用hyg_Text设置，否则扩展属性无效。
+//设置有行间隔和字体间隔时的内容。该版本支持系统方法：self.text = subString 设置 使用下面属性也可以：self.hyg_Text = subString。
 @property (nonatomic,copy) NSString * hyg_Text;
-//获取设置过行间距、字间距、首行缩进的内容高度。注意：在设置过hyg_Text之后方可调用生效，并且样式需统一
+//获取设置过行间距、字间距、首行缩进的内容高度。
 - (CGFloat)getHyg_TextHeightWithSize:(CGSize)labelSize;
 //设置某段文字字体颜色、字体样式大小。建议：如果一段文字中有部分样式不同，label布局的时候建议使用sizeToFit自动调整
 - (void)setTextColor:(UIColor *)textColor font:(UIFont *)font range:(NSRange)range;
