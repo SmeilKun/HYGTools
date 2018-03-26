@@ -68,6 +68,8 @@ char isFirstLineHeadIndentKey;
         self.fontLineSpace ||
         self.isFirstLineHeadIndent) {
 
+        objc_setAssociatedObject(self, &hyg_TextKey, text, OBJC_ASSOCIATION_COPY_NONATOMIC);
+
         if (!self.font) {
             self.font = [UIFont systemFontOfSize:17];
         }
